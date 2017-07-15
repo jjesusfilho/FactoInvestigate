@@ -37,15 +37,15 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.HCPC(res.hcpc, choice = 'map', draw.tree = FALSE, select = drawn, title = '')", file = file, stop = TRUE, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Ascending Hierachical Classification of the individuals"), ".**", file = file, sep = "")
-             writeRmd("*", gettext("The classification made on individuals reveals"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
+             writeRmd("**", figure.title, " - ", gettext("Classidicação Hierárquica Ascedente dos indivíduos"), ".**", file = file, sep = "")
+             writeRmd("*", gettext("A classificação feita sobre os indivíduos revela"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
              
              for(i in levels(res.hcpc$data.clust$clust)) { # pour chaque cluster dans le groupe
                writeRmd(file = file)
                if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) != 0) {
                  if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) == 1) {
-                   writeRmd(gettext("The **cluster"), " ", i, "** ", gettext("is made of individuals such as"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
-                            "*. ", gettext("This group is characterized by"), file = file, sep = "", end = " :\n\n")
+                   writeRmd(gettext("O **cluster"), " ", i, "** ", gettext("é composto por indivíduos tais como"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
+                            "*. ", gettext("Este grupo é caracterizado por"), file = file, sep = "", end = " :\n\n")
                  } else {
                    ind.clust = rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]
                    if(length(ind.clust) > mmax) {
@@ -53,42 +53,42 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
                    } else {
                      ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *"))
                    }
-                   writeRmd(gettext("The **cluster"), " ", i, "** ", gettext("is made of individuals such as"), " *", ind.clust, "*. ", gettext("This group is characterized by"), file = file, sep = "", end = " :\n\n")
+                   writeRmd(gettext("O **cluster"), " ", i, "** ", gettext("é composto por indivíduos tais como"), " *", ind.clust, "*. ", gettext("This group is characterized by"), file = file, sep = "", end = " :\n\n")
                  }
                } else {
-                 writeRmd(gettext("The **cluster"), " ", i, "** ", gettext("is made of individuals sharing"), end = " :\n\n", file = file, sep = "")
+                 writeRmd(gettext("O **cluster"), " ", i, "** ", gettext("é composto por indivíduos partilhando"), end = " :\n\n", file = file, sep = "")
                }
                if(!is.null(CD$quanti[[i]])) {
                  if(any(CD$quanti[[i]][, 1] > 0)) {
                    if(nrow(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] > 0,]) == 1) {
-                     writeRmd("- ", gettext("high values for the variable"), " *", rownames(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] > 0,]), end = "*.\n", file = file, sep = "")
+                     writeRmd("- ", gettext("altos valores para a variável"), " *", rownames(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] > 0,]), end = "*.\n", file = file, sep = "")
                    } else {
                      high.var = rownames(CD$quanti[[i]][CD$quanti[[i]][, 1] > 0,])
                      if(length(high.var) > nmax) {
                        high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *"))
-                       writeRmd("- ", gettext("high values for variables like"), " *", high.var, "* (", gettext("variables are sorted from the strongest"), end = ").\n", file = file, sep = "")
+                       writeRmd("- ", gettext("altos valores para a variável como"), " *", high.var, "* (", gettext("variáveis são classificados a partir da mais forte"), end = ").\n", file = file, sep = "")
                      } else {
                        high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *"))
-                       writeRmd("- ", gettext("high values for the variables"), " *", high.var, "* (", gettext("variables are sorted from the strongest"), end = ").\n", file = file, sep = "")
+                       writeRmd("- ", gettext("altos valores para as variáveis"), " *", high.var, "* (", gettext("variáveis são classificados a partir da mais forte"), end = ").\n", file = file, sep = "")
                      }
                    }
                  }
                  if(any(CD$quanti[[i]][, 1] < 0)) {
                    if(nrow(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] < 0,]) == 1) {
-                     writeRmd("- ", gettext("low values for the variable"), " *", rownames(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
+                     writeRmd("- ", gettext("baixos valores para a variável"), " *", rownames(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                    } else {
                      low.var = rownames(CD$quanti[[i]][CD$quanti[[i]][, 1] < 0,])
                      if(length(low.var) > nmax) {
-                       low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
-                       writeRmd("- ", gettext("low values for variables like"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
+                       low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* e *"))
+                       writeRmd("- ", gettext("baixos valores para variáveis como"), " *", low.var, "* (", gettext("variáveis são classificadas a partir da mais fraca"), end = ").\n", file = file, sep = "")
                      } else {
-                       low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *"))
-                       writeRmd("- ", gettext("low values for the variables"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
+                       low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* e *"))
+                       writeRmd("- ", gettext("baixos valores para as variáveis"), " *", low.var, "* (", gettext("variáveis são classificadas a partir da mais fraca"), end = ").\n", file = file, sep = "")
                      }
                    }
                  }
                } else {
-                 writeRmd("- ", gettext("variables whose values do not differ significantly from the mean"), end = ".\n", file = file)
+                 writeRmd("- ", gettext("variáveis cujos valores não diferem significativamente da da média"), end = ".\n", file = file)
                }
              }
            },
@@ -108,15 +108,15 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.HCPC(res.hcpc, choice = 'map', draw.tree = FALSE, select = drawn, title = '')", file = file, stop = TRUE, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Ascending Hierachical Classification of the rows"), ".**", file = file, sep = "")
-             writeRmd("*", gettext("The classification made on rows reveals"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
+             writeRmd("**", figure.title, " - ", gettext("Classificação Hierárquica Ascendente das linhas"), ".**", file = file, sep = "")
+             writeRmd("*", gettext("A classificação feita nas linhas revela"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
              
              for(i in levels(res.hcpc$data.clust$clust)) { # pour chaque cluster dans le groupe
                writeRmd(file = file)
                if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) != 0) {
                  if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) == 1) {
-                   writeRmd(gettext("The 1st cluster is made of rows such as"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
-                            "*. ", gettext("This group is characterized by"), file = file, sep = "", end = " :\n\n")
+                   writeRmd(gettext("O primeiro cluster é composto de linhas tais como"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
+                            "*. ", gettext("Este grupo  é caracterizado por"), file = file, sep = "", end = " :\n\n")
                  } else {
                    ind.clust = rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]
                    if(length(ind.clust) > mmax) {
